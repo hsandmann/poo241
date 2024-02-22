@@ -16,6 +16,7 @@ public class Aula01 {
             else if (linha.equalsIgnoreCase("ex4")) ex4();
         }
         System.out.println("bye bye! see you later!");
+        scanner.close();
     }
 
     public static void ex3() {
