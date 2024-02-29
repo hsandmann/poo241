@@ -1,0 +1,26 @@
+# docker compose up -d --build --force-recreate
+version: '3.8'
+name: espm
+
+services:
+
+  db:
+    container_name: db-espm
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=espm
+      - POSTGRES_PASSWORD=espm
+      - POSTGRES_DB=espm
+    # volumes:
+    #   - $VOLUME/postgres/spkio/init-trace.sql:/docker-entrypoint-initdb.d/init-trace.sql:ro
+    #   - $VOLUME/postgres/spkio/data:/var/lib/postgresql/data
+    #   - $CONFIG/postgres/spkio/postgresql.conf:/etc/postgresql.conf:ro
+    networks:
+      - private-network
+
+networks:
+  private-network:
+    driver: bridge
+
