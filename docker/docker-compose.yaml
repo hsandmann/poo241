@@ -4,8 +4,8 @@ name: espm
 
 services:
 
-  db:
-    container_name: db
+  db-postgres:
+    container_name: db-postgres
     image: postgres:latest
     ports:
       - 5432:5432
@@ -15,6 +15,18 @@ services:
       - POSTGRES_DB=espm
     volumes:
       - ./volume/postgres/data:/var/lib/postgresql/data
+    networks:
+      - private-network
+
+  db-mysql:
+    container_name: db-mysql
+    image: mysql:latest
+    networks:
+      - private-network
+
+  redis:
+    container_name: db-redis
+    image: redis:latest
     networks:
       - private-network
 
