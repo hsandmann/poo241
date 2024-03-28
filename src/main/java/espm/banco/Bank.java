@@ -1,5 +1,6 @@
 package espm.banco;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
@@ -9,7 +10,14 @@ public class Bank {
 
     // construtor
     public Bank(String name) {
+        System.out.println("chamando Bank(String)");
         this.name = name;
+        this.contas = new ArrayList<>();
+    }
+
+    public Bank() {
+        this("Banco da ESPM");
+        System.out.println("chamando Bank()");
     }
 
     public String getName() {

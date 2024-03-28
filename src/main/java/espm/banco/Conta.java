@@ -4,9 +4,17 @@ import java.util.UUID;
 
 public class Conta {
 
+    public static final double INITIAL_VALUE = 0;
+    public static double LIMIT = 50;
+
+    static {
+        System.out.println("Conta inicializada");
+    }
+
     private String id = UUID.randomUUID().toString();
-    private double limite = 50;
-    private double saldo = 0;
+    private double limite = LIMIT;
+    private double saldo = INITIAL_VALUE;
+    private boolean ativa;
 
     public String getId() {
         return id;
@@ -26,6 +34,14 @@ public class Conta {
         if (valor > saldo + limite)
             throw new RuntimeException("Saldo insuficiente");
         saldo -= valor;
+    }
+
+    public void sacar(String valor) {
+        sacar(Double.parseDouble(valor));
+    }
+
+    public boolean getActiva() {
+        return ativa;
     }
 
 }
