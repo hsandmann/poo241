@@ -7,6 +7,7 @@ public class Bank {
 
     private String name;
     private List<Conta> contas;
+    private List<Cliente> clientes = new ArrayList<>();
 
     // construtor
     public Bank(String name) {
@@ -26,6 +27,10 @@ public class Bank {
 
     public List<Conta> getContas() {
         return contas;
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
     }
 
 }

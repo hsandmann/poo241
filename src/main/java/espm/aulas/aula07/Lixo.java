@@ -1,6 +1,7 @@
 package espm.aulas.aula07;
 
 import espm.banco.Conta;
+import espm.banco.ContaCorrente;
 
 public class Lixo {
     public static void main(String[] args) {
@@ -8,7 +9,7 @@ public class Lixo {
         System.out.println("Memória total da JVM -> "+rt.totalMemory());
         Conta c;
         for(int i = 0; i < 10000000; i++) {
-            c = new Conta();
+            c = new ContaCorrente();
             c = null;
         }
         System.out.println("Livre antes da coleta -> "+rt.freeMemory());

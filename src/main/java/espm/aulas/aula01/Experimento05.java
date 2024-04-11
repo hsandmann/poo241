@@ -2,17 +2,16 @@ package espm.aulas.aula01;
 
 import java.util.Date;
 
-import espm.banco.Bank;
 import espm.banco.Cliente;
-import espm.banco.Conta;
+import espm.banco.PessoaFisica;
 
 public class Experimento05 {
 
     public static void main(String[] args) {
-        Cliente c1 = new Cliente("12345678901", "Seumini");
-        c1.setBirthdate(new Date());
+        Cliente c1 = new PessoaFisica("12345678901", "Seumini");
+        ((PessoaFisica) c1).setBirthdate(new Date()); // cast de tipo
 
-        Cliente c2 = new Cliente("2123", "Rafa Windows");
+        PessoaFisica c2 = new PessoaFisica("2123", "Rafa Windows");
         c2.setBirthdate(new Date());
 
         Cliente c3 = c1;

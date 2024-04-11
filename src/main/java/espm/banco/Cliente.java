@@ -1,26 +1,18 @@
 package espm.banco;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Cliente {
 
     private String id;
-    private String cpf;
     private String name;
-    private Date birthdate;
+    private List<Conta> contas;
 
-    public Cliente() {
+    protected Cliente(String name) {
         this.id = UUID.randomUUID().toString();
-    }
-
-    public Cliente(String cpf) {
-        this();
-        this.cpf = cpf;
-    }
-
-    public Cliente(String cpf, String name) {
-        this(cpf);
+        this.contas = new ArrayList<>();
         this.name = name;
     }
 
@@ -36,24 +28,14 @@ public class Cliente {
         return name;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+    public List<Conta> getContas() {
+        return contas;
     }
 
     @Override
     public String toString() {
         return "Cliente [id=" + id
-            + ", cpf=" + cpf
             + ", name=" + name
-            + ", birthdate=" + birthdate
         + "]";
     }
     
