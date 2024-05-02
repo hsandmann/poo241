@@ -17,5 +17,15 @@ public class ContaPoupanca extends Conta implements Rendimento {
     public double taxa() {
         return 0.01;
     }
+
+    @Override
+    public void aplicar() {
+        this.saldo += this.saldo * this.taxa();
+    }
+
+    @Override
+    public String toString() {
+        return "Poupanca: " + super.toString();
+    }
     
 }

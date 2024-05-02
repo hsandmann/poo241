@@ -12,7 +12,7 @@ public abstract class Conta {
 
     private String id = UUID.randomUUID().toString();
     protected double saldo = INITIAL_VALUE;
-    private boolean ativa;
+    private boolean ativa = true;
 
     public String getId() {
         return id;
@@ -23,6 +23,7 @@ public abstract class Conta {
     }
 
     public void depositar(double valor) {
+        if (!ativa) throw new BancoException("Conta inativa");
         if (valor > 0) saldo += valor;
     }
     
@@ -34,6 +35,11 @@ public abstract class Conta {
 
     public boolean getActiva() {
         return ativa;
+    }
+
+    @Override
+    public String toString() {
+        return "[id: " + id + ", saldo: " + saldo + ", ativa: " + ativa + "]";
     }
 
 }

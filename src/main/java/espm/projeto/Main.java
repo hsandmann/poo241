@@ -1,7 +1,6 @@
 package espm.projeto;
 
 import java.util.Set;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import espm.banco.BancoException;
@@ -13,6 +12,7 @@ import espm.banco.ContaInvestimento;
 import espm.banco.ContaPoupanca;
 import espm.banco.PessoaFisica;
 import espm.banco.PessoaJuridica;
+import espm.banco.Rendimento;
 
 public class Main {
 
@@ -58,6 +58,9 @@ public class Main {
                                     : "cnpj: " + ((PessoaJuridica) cliente).getCnpj();
                                 System.out.println(saida + "| " + cliente.getName());
                             }
+                        } else if (comando[1].toLowerCase().equals("exit")) {
+                            currentCustomer = null;
+                            currentAccount = null;
                         } else {
                             String cpfCnpj = comando[1];
                             currentCustomer = banco.getClientes().stream()
@@ -74,11 +77,56 @@ public class Main {
  
                 } else if (comando[0].equalsIgnoreCase("account")) {
                     if (currentCustomer == null)
-                        throw new BancoException("Cliente não selecionado");
-                    Conta conta = createAccount(currentCustomer);
-                    currentCustomer.getContas().add(conta);
-                    currentAccount = conta;
-                    
+                        banco.getContas().forEach(c -> System.out.println(c));
+                    else {
+                        if (comando.length == 1) {
+                            Conta conta = createAccount(currentCustomer);
+                            currentCustomer.getContas().add(conta);
+                            banco.getContas().add(conta);
+                            currentAccount = conta;
+                        } else if (comando[1].equalsIgnoreCase("list")) {
+                            System.out.println("Contas do cliente " + currentCustomer.getName());
+                            currentCustomer.getContas().forEach(c -> System.out.println(c));
+                        } else {
+                            String id = comando[1];
+                            currentAccount = currentCustomer.getContas().stream()
+                                .filter(c -> c.getId().equals(id))
+                                .findFirst()
+                                .orElseThrow(() -> new BancoException("Conta não encontrada"));
+                        }
+                    }
+
+                } else if (comando[0].equalsIgnoreCase("deposit")) {
+                    if (currentAccount == null)
+                        throw new BancoException("Conta não selecionada");
+                    if (comando.length != 2)
+                        throw new BancoException("Número de argumentos inválido");
+                    double valor = Double.parseDouble(comando[1]);
+                    currentAccount.depositar(valor);
+                    System.out.println("Deposito efetuado com sucesso, saldo: " + currentAccount.getSaldo());
+
+                } else if (comando[0].equalsIgnoreCase("withdraw")) {
+                    if (currentAccount == null)
+                        throw new BancoException("Conta não selecionada");
+                    if (comando.length != 2)
+                        throw new BancoException("Número de argumentos inválido");
+                    double valor = Double.parseDouble(comando[1]);
+                    currentAccount.sacar(valor);
+                    System.out.println("Saque efetuado com sucesso, saldo: " + currentAccount.getSaldo());
+
+                } else if (comando[0].equalsIgnoreCase("performance")) {
+
+                    banco.getContas().stream()
+                        .filter(c -> c instanceof Rendimento) // filtra
+                        .map(c -> (Rendimento) c) // cast para ContaInvestimento
+                        .forEach(Rendimento::aplicar);
+
+                } else if (comando[0].equalsIgnoreCase("balance")) {
+                    if (currentAccount == null) {
+                        throw new BancoException("Conta não selecionada");
+                    }
+                    System.out.println("Saldo: " + currentAccount.getSaldo());
+
                 } else {
                     throw new IllegalArgumentException("Comando inválido");
                 }

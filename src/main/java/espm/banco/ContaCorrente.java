@@ -32,4 +32,8 @@ public class ContaCorrente extends Conta {
         this.saldo -= valor;
     }
     
+    @Override
+    public String toString() {
+        return "Corrente: " + super.toString();
+    }
 }
