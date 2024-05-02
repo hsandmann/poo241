@@ -1,6 +1,6 @@
 package espm.banco;
 
-public class ContaPoupanca extends Conta {
+public class ContaPoupanca extends Conta implements Rendimento {
 
     @Override
     public void sacar(double valor) {
@@ -11,6 +11,11 @@ public class ContaPoupanca extends Conta {
             throw new IllegalArgumentException("Saldo insuficiente");
         }
         this.saldo -= valor;
+    }
+
+    @Override
+    public double taxa() {
+        return 0.01;
     }
     
 }
